@@ -1,0 +1,11 @@
+{% extends "_layout.html" %}
+{% block content %}
+    <h1>{{warehouse.location}}</h1>
+    <h3>Store Name</h3>
+    <p>{{warehouse.store.name}}</p>
+    <ul>
+        {% for p in warehouse.products %}
+        <li>{{p.name}}</li>
+        {% endfor %}  
+    </ul>
+{% endblock %} 

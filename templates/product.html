@@ -1,4 +1,26 @@
 {% extends "_layout.html" %}
 {% block content %}
 <h1>Add Product</h1>
+
+<form action="{{ url_for('create_product') }}" method="POST">
+    <div class="form-group">
+        <label for="name">Product name</label>
+        <input type="text" name="name" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label for="name">Product description</label>
+        <input type="text" name="description" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <select name="warehouse_id" id="">
+            <option disable selected value>-- Select a warehouse--</option>
+            {% for warehouse in warehouses %}
+            <option value="{{warehouse.id}}">{{warehouse.location}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">submit</button>
+</form>
+
 {% endblock %} 

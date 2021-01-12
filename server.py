@@ -22,7 +22,6 @@ def migrate():
 
 @app.route("/")
 def index():
-   flash("hey")
    return render_template('index.html')
 
 #STORE
@@ -68,11 +67,37 @@ def create_warehouse():
       flash("Unable to add warehouse!")
    return redirect(url_for("warehouse"))
 
+@app.route("/warehouse/<int:id>", methods=["GET"])
+def show_warehouse(id):
+   warehouse = Warehouse.get_by_id(id)
+   return render_template('warehouse_show.html', warehouse=warehouse)
+
 #Product
 
 @app.route("/product", methods=["GET"])
 def product():
-   return render_template('product.html')
+   warehouses = Warehouse.select()
+   return render_template('product.html', warehouses=warehouses)
+
+@app.route("/product/new", methods=["POST"])
+def create_product():
+   warehouse = Store.get(
+      id=request.form["warehouse_id"]
+   )
+
+   product = Product(
+      name = request.form['name'],
+      description = request.form['description'],
+      warehouse = warehouse
+   )
+
+   if product.save():
+      flash("successfully added product!")
+   else:
+      flash("Yikes, try again mate.")
+   return redirect(url_for("product"))
+
+
 
 if __name__ == '__main__':
    app.run(debug=True)
