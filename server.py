@@ -100,6 +100,20 @@ def show_warehouse(id):
    warehouse = Warehouse.get_by_id(id)
    return render_template('warehouse_show.html', warehouse=warehouse)
 
+@app.route("/warehouses", methods=["GET"])
+def list_warehouses():
+   warehouses = Warehouse.select()
+   return render_template('warehouses.html', warehouses=warehouses)
+
+@app.route("/warehouse/<int:id>/delete", methods=["POST"])
+def delete_warehouse(id):
+   warehouse = Warehouse.get_by_id(id)
+   if warehouse.delete_instance():
+      flash("Warehouse deleted")
+   else:
+      flash("Unable to delete warehouse")
+   return redirect(url_for('list_warehouses'))
+
 #Product
 
 @app.route("/product", methods=["GET"])
