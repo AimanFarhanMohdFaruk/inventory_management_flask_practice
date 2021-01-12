@@ -2,11 +2,12 @@
 {% block content %}
 <h1>Add Store</h1>
 
-<form action="{{ url_for('create_store')}}" method="POST">
+<form action="{{ url_for('create_store') }}" method="POST">
     <div class="form-group">
         <label for="name">Store name</label>
         <input type="text" name="name" class="form-control"/>
         <button type="submit" class="btn btn-primary">submit</button>
     </div>
 </form>
+
 {% endblock %} 

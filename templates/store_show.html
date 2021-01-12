@@ -1,4 +1,7 @@
 {% extends "_layout.html" %}
 {% block content %}
-<h1>Current Stores</h1>
+<h1>{{store.name}}</h1>
+<h3>Number of Warehouses</h3>
+<p>{{store.warehouses|length}}</p>
+<h3>Warehouses Locations</h3>
 {% endblock %} 

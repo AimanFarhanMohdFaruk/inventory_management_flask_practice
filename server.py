@@ -40,11 +40,33 @@ def create_store():
       flash("Not succesfull, try again.")
    return redirect(url_for('store'))
 
+@app.route("/store/<int:id>", methods=["GET"])
+def show_store(id):
+   store = Store.get_by_id(id)
+   return render_template('store_show.html', store=store)   
+
 #Warehouse
 
 @app.route("/warehouse", methods=["GET"])
 def warehouse():
-   return render_template('warehouse.html')
+   stores = Store.select()
+   return render_template('warehouse.html', stores=stores)
+
+@app.route("/warehouse/new", methods=["POST"])
+def create_warehouse():
+   store = Store.get(
+      id=request.form["store_id"]
+   )
+   warehouse = Warehouse(
+      location = request.form["location"],
+      store=store
+   )
+
+   if warehouse.save():
+      flash("Warehouse added to store!")
+   else:
+      flash("Unable to add warehouse!")
+   return redirect(url_for("warehouse"))
 
 #Product
 
