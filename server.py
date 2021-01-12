@@ -49,6 +49,19 @@ def list_stores():
    stores = Store.select()
    return render_template('stores.html', stores=stores)
 
+@app.route("/stores/<int:id>/update", methods=["POST"])
+def edit_store(id):
+   store = Store(
+      id=id,
+      name = request.form['name']
+   )
+
+   if store.save(only=[Store.name]):
+      flash("Store name succesfully edited!")
+   else:
+      flash("Unable to edit store name.")
+   return redirect(url_for('show_store', id=id))
+
 @app.route("/stores/<int:id>/delete", methods=["POST"])
 def delete_store(id):
    store = Store.get_by_id(id)

@@ -9,5 +9,12 @@
         <li>{{w.location}}</li>
         {% endfor %}  
     </ul>
+    <form action="{{ url_for('edit_store', id=store.id) }}" method="POST">
+        <div class="form-group">
+            <label for="name">Edit Store name</label>
+            <input type="text" name="name" class="form-control"/>
+            <button type="submit" class="btn btn-primary">submit</button>
+        </div>
+    </form>
 
 {% endblock %} 
