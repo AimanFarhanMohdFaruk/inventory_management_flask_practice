@@ -42,7 +42,22 @@ def create_store():
 @app.route("/store/<int:id>", methods=["GET"])
 def show_store(id):
    store = Store.get_by_id(id)
-   return render_template('store_show.html', store=store)   
+   return render_template('store_show.html', store=store)
+
+@app.route("/stores", methods=["GET"])
+def list_stores():
+   stores = Store.select()
+   return render_template('stores.html', stores=stores)
+
+@app.route("/stores/<int:id>/delete", methods=["POST"])
+def delete_store(id):
+   store = Store.get_by_id(id)
+
+   if store.delete_instance(recursive=True):
+      flash("Store deleted")
+   else:
+      flash("Unable to delete store.")
+   return redirect(url_for('list_stores'))   
 
 #Warehouse
 
@@ -81,7 +96,7 @@ def product():
 
 @app.route("/product/new", methods=["POST"])
 def create_product():
-   warehouse = Store.get(
+   warehouse = Warehouse.get(
       id=request.form["warehouse_id"]
    )
 
